@@ -1,2 +1,56 @@
-<!DOCTYPE html>
+
 <html>
+<head>
+  <title>ToDo List</title>
+  <link rel = "stylesheet" href = "style.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js"></script>
+
+  <script>//<![CDATA[
+angular.module('ToDoList',['ui.router']).config(['$stateProvider','$urlRouterProvider',function($stateProvider,$urlRouterProvider){$stateProvider.state('home',{url:'/home',templateUrl:'/home.html',controller:'MainCtrl'})
+$urlRouterProvider.otherwise('home');}]).factory('taskFactory',[function(){var o={tasks:[]};return o;}]).controller('MainCtrl',['$scope','taskFactory',function($scope,taskFactory){$scope.test='Hello world!';$scope.tasks=taskFactory.tasks;$scope.addTask=function(){if($scope.formContent===''){return;}
+$scope.tasks.push({title:$scope.formContent,priority:1,complete:false});$scope.formContent='';};$scope.increasePriority=function(task){task.priority+=1;};$scope.decreasePriority=function(task){if(task.priority>1)
+{task.priority-=1;}};$scope.removeCompleted=function(task){var oldList=$scope.tasks;$scope.tasks=[];angular.forEach(oldList,function(x){if(!x.complete){$scope.tasks.push(x);}})};}]);
+//]]></script>
+</head>
+
+<body ng-app="ToDoList">
+	<div>
+		<ui-view></ui-view>
+	</div>
+
+<script type="text/ng-template" id="/home.html">
+	<div class = "page-header">
+		<h1>To Do List:</h1>
+	</div>
+	
+	<form ng-submit="addTask()"
+		<h3>Add a new task to your list</h3>
+	
+		<div class= "form-group" width="400px">
+		<input type = "text"
+			class = "form-control"
+			placeholder = "New Task"
+			ng-model = "formContent"
+			size = "35">
+			</input>
+                        
+		</div>
+		<button type="submit" class = "btn btn-danger">Add Task</button>
+	<form></br></br>
+
+	<div id = "list"></br>
+	<div ng-repeat="task in tasks | orderBy: '+priority'">
+		<strong>{{task.title}}</strong> 
+		</span>	
+		<input type="checkbox" ng-model="task.complete">
+	</div></br></div>
+	</br>
+	
+	<button class = "btn btn-danger" ng-click="removeCompleted()">Remove Completed Tasks</button>
+	
+</script>
+	
+</body>
+</body>
+
