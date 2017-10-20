@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 <head>
   <title>To Do List</title>
@@ -6,7 +7,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js"></script>
 
   <script>
-angular.module('ToDoList',['ui.router'])
+angular.module('ChecklistApp',['ui.router'])
 .config(['$stateProvider','$urlRouterProvider',function($stateProvider,$urlRouterProvider){
 	$stateProvider.state('home',{url:'/home',templateUrl:'/home.html',controller:'MainCtrl'})
 	$urlRouterProvider.otherwise('home');
@@ -29,36 +30,37 @@ $scope.removeCompleted=function(task){
 </script>
 </head>
 
-<body ng-app="ToDoList">
+<body ng-app="ChecklistApp">
 <div>
 <ui-view></ui-view>
 </div>
 
 <script type="text/ng-template" id="/home.html">
-<div class="page-header">
-<h1>My Checklist</h1>
+<div>
+<h1 class="header">My Checklist</h1>
 </div>
 
+<div id="formdiv">
 <form ng-submit="addTask()"
-<h3>Add a new task to your list</h3>
+<h3>Add items to your checklist: </h3>
 
-<div class="form-group" width="400px">
-<input type="text" class="form-control" placeholder="New Task" ng-model="formContent" size="35">
+<div class="mainform" width="400px">
+<input type="text" class="form-control" placeholder="New Item" ng-model="formContent" size="39.5">
 </input>
                         
 </div>
-<button type="submit" class="btn btn-danger">Add Task</button>
+<button type="submit" id="add" class="button large blue">Add Item</button>
+<button id="remove" class="button large" ng-click="removeCompleted()">Remove Tasks</button>
 <form></br></br>
+</div>
 
 <div id="list"></br>
-<div ng-repeat="task in tasks">
-<strong>{{task.title}}</strong> 
-</span>
-<input type="checkbox" ng-model="task.complete">
+<div id="tasks" ng-repeat="task in tasks"> 
+<input id="checker" type="checkbox" ng-model="task.complete">
+<strong>{{task.title}}</strong>
 </div></br></div>
 </br>
 
-<button class="btn btn-danger" ng-click="removeCompleted()">Remove Tasks</button>
 
 </script>
 
